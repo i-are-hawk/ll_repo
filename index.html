@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<style>
+
+/* FONT IMPORT */
+/* @import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap'); */
+
+/* -----------------------
+   THEME VARIABLES
+------------------------ */
+:root {
+    --bg: #ebf2f1;
+    --text: #000000;
+}
+
+/* DARK MODE */
+[data-theme="dark"] {
+    --bg: #0d3138;
+    --text: #ebf2f1;
+}
+
+/* -----------------------
+   BASE STYLES
+------------------------ */
+body {
+    margin: 0;
+    /*font-family: system-ui, sans-serif;*/
+    line-height: 1.5;
+    background: var(--bg);
+    color: var(--text);
+    padding-top: 10px;
+}
+
+a,
+a:visited {
+    color: var(--text);
+    /* color: #65546e; */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-weight: 400;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--text);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text);
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 2rem 2rem;
+    /* font-family: 'Ibarra Real Nova'; */
+    font-family: Calibri;
+    margin: 1rem 6rem;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.hero-topics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    padding: 1rem, 1rem, 3rem;
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 200;
+}
+
+/* newsletter grid */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    align-items: start;
+}
+
+/* each column */
+.news-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* category block */
+.category-section {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--text);
+}
+
+/* remove border on last item in column */
+.category-section {
+    border-bottom: none;
+}
+
+/* category headers */
+.topic {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+    opacity: 0.75;
+    margin-bottom: 0.75rem;
+}
+
+/* TOPICS */
+.topic {
+    font-size: 1.5rem;
+    /* font-family: 'Inter'; */
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.75rem;
+    text-align: right;
+    align-self: start;
+}
+
+/* OUTLET */
+.outlet {
+    font-weight: 400;
+    opacity: 0.5;
+    text-transform: uppercase;
+}
+
+/* LINKS */
+.links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-weight: 200;
+    font-size: 1.25rem;
+    margin-top: auto;
+    /* font-family: 'Ibarra Real Nova'; */
+    /* font-family: 'Times New Roman'; */
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif ;
+}
+
+.links li {
+    margin-bottom: 2rem;
+    line-height: 1.3;
+}
+
+.dot-div {
+    opacity: 0.6;
+}
+
+/* FOOTER */
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    border-top: 1px solid var(--text);
+    margin-top: 4rem;
+    /* font-family: Inter; */
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 0.25rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .hero-topics {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .news-grid {
+    grid-template-columns: 1fr;
+    }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div>LinksLetter</div>
+
+    <div class="nav-actions">
+        
+        <button
+            class="nav-link"
+            onclick="location.href='/about'">
+            About
+        </button>
+        <button
+            class="nav-link"
+            onclick="toggleTheme()">
+            ☾
+        </button>
+    
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1><a href="https://theintercept.com/2026/06/09/graham-platner-primary-election-day-maine/" target="_blank" rel="noopener noreferrer"> Graham Platner Wins in Maine, Turning Anti-Establishment Fight on Susan Collins  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></h1>
+
+    <div class="hero-topics">
+        <div class='hero-card'><a href="https://www.currentaffairs.org/news/how-hawai%CA%BBi-became-the-most-unionized-state" target="_blank" rel="noopener noreferrer">How Hawaiʻi Became the Most Unionized State <span class="dot-div"> · </span><span class="outlet">Current Affairs</span></a></div>
+<div class='hero-card'><a href="https://www.epi.org/blog/trumps-war-in-iran-has-wiped-out-1-5-years-of-wage-growth/" target="_blank" rel="noopener noreferrer"> Trump’s war in Iran has wiped out 1.5 years of wage growth <span class="dot-div"> · </span><span class="outlet">EPI</span></a></div>
+<div class='hero-card'><a href="https://www.thenation.com/article/politics/our-endorsement-brad-lander-for-congress/" target="_blank" rel="noopener noreferrer">Our Endorsement: Brad Lander for Congress <span class="dot-div"> · </span><span class="outlet">The Nation</span></a></div>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="news-grid">
+    <div class='news-column'>
+<div class='category-section'><div class='topic'>Economy</div><ul class='links'>
+<li><a href="https://newrepublic.com/article/210087/trump-tariffs-iran-war-soybean-farmers" target="_blank" rel="noopener noreferrer">The Farmers Caught in the Middle of Trump’s Tariffs and the Iran War <span class="dot-div"> · </span><span class="outlet">The New Republic</span></a></li>
+<li><a href="https://www.theatlantic.com/ideas/2026/06/national-debt-affordability-legislation/687517/" target="_blank" rel="noopener noreferrer">Americans Are Already Paying Dearly for the National Debt <span class="dot-div"> · </span><span class="outlet">The Atlantic</span></a></li>
+<li><a href="https://www.theguardian.com/business/2026/jun/10/inflation-report-rate" target="_blank" rel="noopener noreferrer">Trump says ‘I love the inflation’ as rate rises to 4.2% amid Iran war pressure <span class="dot-div"> · </span><span class="outlet">The Guardian</span></a></li>
+<li><a href="https://www.motherjones.com/politics/2026/06/elon-musk-trillionaire-spacex-ipo-oligarchy-democracy/" target="_blank" rel="noopener noreferrer">Why No Human Being Should Ever Be Allowed to Have a Trillion Dollars <span class="dot-div"> · </span><span class="outlet">Mother Jones</span></a></li>
+<li><a href="https://jacobin.com/2026/06/keynesianism-neoliberalism-mmt-bailouts-capitalism" target="_blank" rel="noopener noreferrer">Public Bailouts Are What Keeps Our Economic System Afloat <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Immigration</div><ul class='links'>
+<li><a href="https://therealnews.com/we-demand-freedom-immigrants-on-strike-in-new-jersey-prison" target="_blank" rel="noopener noreferrer"> ‘We demand freedom’: Immigrants on strike in New Jersey prison <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://www.motherjones.com/politics/2026/06/trump-dhs-ice-family-separations-office-refugee-resettlement-orr-unaccompanied-minors/" target="_blank" rel="noopener noreferrer">The Department of Homeland Security Is “Kidnapping People’s Kids” <span class="dot-div"> · </span><span class="outlet">Mother Jones</span></a></li>
+<li><a href="https://therealnews.com/alarm-at-white-house-after-vance-and-miller-pushed-insurrection-act-habeas-corpus-suspension-during-anti-ice-protests" target="_blank" rel="noopener noreferrer"> ‘Alarm’ at White House after Vance and Miller pushed Insurrection Act, habeas corpus suspension during anti-ICE protests  <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://theintercept.com/2026/06/20/fbi-ice-delaney-hall-protest-informants/" target="_blank" rel="noopener noreferrer"> FBI Tried to Flip Anti-ICE Protesters Into Informants  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Gaza</div><ul class='links'>
+<li><a href="https://www.currentaffairs.org/news/the-right-are-no-friends-of-palestine" target="_blank" rel="noopener noreferrer">The Right Are No Friends of Palestine <span class="dot-div"> · </span><span class="outlet">Current Affairs</span></a></li>
+<li><a href="https://www.dropsitenews.com/p/university-michigan-palestine-protests-federal-indictments-nessel-sayed" target="_blank" rel="noopener noreferrer">The Issue of Israel Is Ending Democracy In Michigan <span class="dot-div"> · </span><span class="outlet">Drop Site</span></a></li>
+<li><a href="https://www.pbs.org/newshour/show/how-gazas-students-are-still-learning-despite-shattered-schools-and-displacement" target="_blank" rel="noopener noreferrer">How Gaza's students are still learning despite shattered schools and displacement <span class="dot-div"> · </span><span class="outlet">PBS</span></a></li>
+<li><a href="https://www.counterpunch.org/2026/06/12/the-us-and-israel-merger/" target="_blank" rel="noopener noreferrer">The US and Israel Merger <span class="dot-div"> · </span><span class="outlet">CounterPunch</span></a></li>
+<li><a href="https://www.dropsitenews.com/p/gaza-yellow-line-blocks-tuffah-halawa-jawazat-israeli-bases" target="_blank" rel="noopener noreferrer">In Campaign to Seize More of Gaza, Israel Expands Attacks on Palestinians Near “Yellow Line” <span class="dot-div"> · </span><span class="outlet">Drop Site</span></a></li>
+<li><a href="https://theintercept.com/2026/06/19/israel-gaza-ceasefire-tariq-kenney-shawa/" target="_blank" rel="noopener noreferrer"> The Performative Ceasefire in Gaza  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://www.pewresearch.org/short-reads/2026/06/04/most-people-across-36-countries-have-negative-views-of-israel-and-little-confidence-in-netanyahu/" target="_blank" rel="noopener noreferrer">Most people across 36 countries have negative views of Israel and little confidence in Netanyahu <span class="dot-div"> · </span><span class="outlet">Pew Research Center</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Thought</div><ul class='links'>
+<li><a href="https://www.currentaffairs.org/news/you-cant-have-both-democracy-and-billionaires" target="_blank" rel="noopener noreferrer">You Can’t Have Both Democracy and Billionaires <span class="dot-div"> · </span><span class="outlet">Current Affairs</span></a></li>
+<li><a href="https://therealnews.com/gaining-consent-by-promising-force-late-fascism-and-gramsci" target="_blank" rel="noopener noreferrer">‘Gaining consent by promising force’: Late fascism and Gramsci  <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://jacobin.com/2026/06/federalism-is-a-disaster-for-the-working-class" target="_blank" rel="noopener noreferrer">Federalism Is a Disaster for the Working Class <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://jacobin.com/2026/06/working-class-candidates-identity-structure" target="_blank" rel="noopener noreferrer">Who Counts as a Worker? <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://foreignpolicy.com/2026/06/18/trolling-politics-social-media-right-maga-trump/" target="_blank" rel="noopener noreferrer">A Brief History of Political Trolling <span class="dot-div"> · </span><span class="outlet">Foreign Policy</span></a></li>
+<li><a href="https://foreignpolicy.com/2026/06/18/france-intellectuals-edgar-morin-philosophy-history/" target="_blank" rel="noopener noreferrer">The Era of the French Intellectual Is Over <span class="dot-div"> · </span><span class="outlet">Foreign Policy</span></a></li>
+<li><a href="https://www.counterpunch.org/2026/06/19/juneteenth-the-day-america-solved-racism-by-taking-a-day-off-from-work/" target="_blank" rel="noopener noreferrer">Juneteenth: The Day America Solved Racism by Taking A Day Off From Work <span class="dot-div"> · </span><span class="outlet">CounterPunch</span></a></li>
+<li><a href="https://www.counterpunch.org/2026/06/19/elon-musk-and-the-politics-of-trillionaire-fascism/" target="_blank" rel="noopener noreferrer">Elon Musk and the Politics of Trillionaire Fascism <span class="dot-div"> · </span><span class="outlet">CounterPunch</span></a></li>
+</ul></div>
+</div>
+<div class='news-column'>
+<div class='category-section'><div class='topic'>Labor</div><ul class='links'>
+<li><a href="https://therealnews.com/from-fascism-to-ai-our-world-is-breaking-only-rank-and-file-workers-can-save-it" target="_blank" rel="noopener noreferrer"> From fascism to AI, our world is breaking. Only rank-and-file workers can save it. <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://jacobin.com/2026/06/labor-notes-conference-ice-minneapolis" target="_blank" rel="noopener noreferrer">No Illusions and No Retreat for Union Militants at Labor Notes <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://laborlab.us/meet-the-king-of-union-busting-bond-shoeneck-king/" target="_blank" rel="noopener noreferrer">Meet the ‘King’ of Union-Busting: Bond, Schoeneck & King <span class="dot-div"> · </span><span class="outlet">LaborLab</span></a></li>
+<li><a href="https://www.politico.com/live-updates/2026/06/09/congress/house-gop-faster-labor-contracts-act-00955340" target="_blank" rel="noopener noreferrer">20 House Republicans cross party lines to pass pro-union bill <span class="dot-div"> · </span><span class="outlet">Politico</span></a></li>
+<li><a href="https://jacobin.com/2026/06/teamsters-ups-amazon-grassroots-organizing" target="_blank" rel="noopener noreferrer">Teamsters for a Democratic Union Leaders Explain Their Strategy <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Health</div><ul class='links'>
+<li><a href="https://www.propublica.org/article/vitamin-k-shot-joseph-mercola-reversal-babies" target="_blank" rel="noopener noreferrer">A Popular Doctor Had Long Warned That Vitamin K Shots Are Risky for Newborns. Now He’s Changed His Tune. <span class="dot-div"> · </span><span class="outlet">ProPublica</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Iran</div><ul class='links'>
+<li><a href="https://www.pbs.org/newshour/show/close-doesnt-count-mideast-experts-assess-potential-u-s-iran-agreement" target="_blank" rel="noopener noreferrer">'Close doesn't count': Mideast experts assess potential U.S.-Iran agreement <span class="dot-div"> · </span><span class="outlet">PBS</span></a></li>
+<li><a href="https://jacobin.com/2026/06/trump-iran-ceasefire-memorandum-israel" target="_blank" rel="noopener noreferrer">Donald Trump Has Nothing to Show for His War With Iran <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://foreignpolicy.com/2026/06/18/iran-war-ceasefire-deal-israel-united-states/?tpcc=recirc_latest062921" target="_blank" rel="noopener noreferrer">How the Iran War Reshaped the Global Landscape of Power  <span class="dot-div"> · </span><span class="outlet">Foreign Policy</span></a></li>
+<li><a href="https://www.dropsitenews.com/p/iran-trump-lebanon-israel-war-mou" target="_blank" rel="noopener noreferrer">Iran Warned Trump: If You Do Not End War on Lebanon, We May Strike Israel Without Warning <span class="dot-div"> · </span><span class="outlet">Drop Site</span></a></li>
+<li><a href="https://theintercept.com/2026/06/20/iran-war-deal-ceasefire/" target="_blank" rel="noopener noreferrer">The Surprising Reaction Inside Iran to Its War Victory  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://theintercept.com/2026/06/18/israel-facebook-censor-content-moderation-iran-war/" target="_blank" rel="noopener noreferrer"> Israel Asked Facebook to Censor Iran War Content, Internal Documents Show  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>World</div><ul class='links'>
+<li><a href="https://therealnews.com/as-ebola-virus-spreads-we-see-the-terrifying-effects-of-trump-dismantling-usaid" target="_blank" rel="noopener noreferrer"> As ebola virus spreads, we see the terrifying effects of Trump dismantling USAID <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://theintercept.com/2026/06/13/elbit-protest-palestine-action-uk-filton-25-terrorism-enhancement/" target="_blank" rel="noopener noreferrer"> They Weren’t Convicted of Terrorism, But These Palestine Activists Got Sentenced as Terrorists Anyway  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://www.pbs.org/newshour/world/thousands-rally-in-belfast-to-condemn-anti-immigrant-rioting-that-followed-stabbing" target="_blank" rel="noopener noreferrer">Thousands rally in Belfast to condemn anti-immigrant rioting that followed stabbing <span class="dot-div"> · </span><span class="outlet">PBS</span></a></li>
+<li><a href="https://jacobin.com/2026/06/uk-belfast-immigration-racism-pogrom" target="_blank" rel="noopener noreferrer">The British Establishment Fuels Anti-Migrant Pogroms <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://jacobin.com/2026/06/interview-france-insoumise-rassemblement-national" target="_blank" rel="noopener noreferrer">France’s Left Can't Abandon Workers to the Far Right <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://jacobin.com/2026/06/fifa-sports-infantino-trump-israel" target="_blank" rel="noopener noreferrer">The World Cup Is Exposing FIFA’s Ugly Partnership With Power <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://foreignpolicy.com/2026/06/19/america-250-foreign-pressure-american-freedom-ideals/" target="_blank" rel="noopener noreferrer">Foreign Pressure, American Freedom <span class="dot-div"> · </span><span class="outlet">Foreign Policy</span></a></li>
+<li><a href="https://foreignpolicy.com/2026/06/16/china-iran-war-lessons-energy-oil-diplomacy/" target="_blank" rel="noopener noreferrer">What Will China Learn From the Iran War? <span class="dot-div"> · </span><span class="outlet">Foreign Policy</span></a></li>
+<li><a href="https://therealnews.com/germany-is-leading-europe-toward-world-war-iii" target="_blank" rel="noopener noreferrer"> Germany is leading Europe toward World War III  <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+</ul></div>
+</div>
+<div class='news-column'>
+<div class='category-section'><div class='topic'>Elections</div><ul class='links'>
+<li><a href="https://jacobin.com/2026/06/nyc-dsa-democratic-primaries-israel-lobby" target="_blank" rel="noopener noreferrer">NYC’s Democratic Primary: Socialists vs. Pro-Israel Oligarchs <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://www.axios.com/2026/06/19/janeese-lewis-george-trump-dc" target="_blank" rel="noopener noreferrer">How a democratic socialist swept D.C. <span class="dot-div"> · </span><span class="outlet">Axios</span></a></li>
+<li><a href="https://theintercept.com/2026/06/19/crypto-donations-ritchie-torres-fellowship-pac/" target="_blank" rel="noopener noreferrer"> Trump-Loving Crypto Super PAC Finally Backs a Democrat: Ritchie Torres  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://jacobin.com/2026/06/avila-chevalier-espaillat-nyc-socialism" target="_blank" rel="noopener noreferrer">Darializa Avila Chevalier on Running for Congress in Zohran’s NYC <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://theintercept.com/2026/06/12/california-maine-primaries/" target="_blank" rel="noopener noreferrer"> The Right’s “Election Fraud” Cry for Midterms Previewed in Primaries  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://zeteo.com/p/5-reasons-why-ken-paxton-is-the-epitome-maga-crookedness" target="_blank" rel="noopener noreferrer">5 Reasons Why Ken Paxton Is the Epitome of MAGA Crookedness <span class="dot-div"> · </span><span class="outlet">Zeteo</span></a></li>
+<li><a href="https://www.gelliottmorris.com/p/2026-06-12-dem-voters-moderate-and-socialist" target="_blank" rel="noopener noreferrer">Democratic voters want the party to be more moderate — and more socialist? <span class="dot-div"> · </span><span class="outlet">Strength In Numbers</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Environment</div><ul class='links'>
+<li><a href="https://therealnews.com/trump-moves-to-dismantle-crucial-ocean-monitoring-system" target="_blank" rel="noopener noreferrer"> ‘Absolutely crazy’: Horror as Trump moves to dismantle crucial ocean monitoring system  <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://www.pbs.org/newshour/science/el-nino-is-here-itll-be-big-bad-and-costly-scientists-fear" target="_blank" rel="noopener noreferrer">El Nino is here. It'll be big, bad and costly, scientists fear <span class="dot-div"> · </span><span class="outlet">PBS</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Foreign Policy</div><ul class='links'>
+<li><a href="https://www.currentaffairs.org/news/the-u.s.-is-terrorizing-cuba-to-make-rich-men-richer?hsLang=en" target="_blank" rel="noopener noreferrer">The U.S. Is Terrorizing Cuba to Make Rich Men Richer <span class="dot-div"> · </span><span class="outlet">Current Affairs</span></a></li>
+</ul></div>
+<div class='category-section'><div class='topic'>Nation</div><ul class='links'>
+<li><a href="https://theintercept.com/2026/06/18/police-killing-michigan-john-jenuwine/" target="_blank" rel="noopener noreferrer"> Police Chased the Wrong Man, Then Shot Him and Watched as He Bled Out  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://jacobin.com/2026/06/knicks-kalshi-polymarket-mamdani-socialism" target="_blank" rel="noopener noreferrer">Culture Vultures Want a Piece of Democratic Socialism <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></li>
+<li><a href="https://theintercept.com/2026/06/19/chud-the-builder-streamer-tennessee-shooting-bail/" target="_blank" rel="noopener noreferrer"> Chud the Builder Fantasized About “Race War.” Now He’s Charged With Attempted Murder.  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+<li><a href="https://www.americanprogress.org/article/how-trumps-cuts-to-fema-and-nws-are-leaving-communities-defenseless-against-extreme-weather-disasters/" target="_blank" rel="noopener noreferrer">How Trump’s Cuts to FEMA and NWS Are Leaving Communities Defenseless Against Extreme Weather Disasters <span class="dot-div"> · </span><span class="outlet">CAP</span></a></li>
+<li><a href="https://therealnews.com/screwworm-parasite-in-texas-as-trump-usda-doubles-down-on-efforts-to-blame-biden" target="_blank" rel="noopener noreferrer"> Screwworm parasite ‘no longer contained in Texas’ as Trump USDA doubles down on efforts to blame Biden  <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></li>
+<li><a href="https://theintercept.com/2026/06/13/indiana-media-ban-death-penalty-law/" target="_blank" rel="noopener noreferrer"> Indiana Banned Press From Executions for “Dignity.” It Actually Serves Repression.  <span class="dot-div"> · </span><span class="outlet">The Intercept</span></a></li>
+</ul></div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div>© 2026</div>
+</footer>
+
+<!-- -----------------------
+     THEME SCRIPT
+------------------------ -->
+<script>
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+}
+
+// load saved theme or default
+const saved = localStorage.getItem("theme");
+document.documentElement.setAttribute(
+    "data-theme",
+    saved || "light"
+);
+</script>
+
+</body>
+</html>
