@@ -1,41 +1,62 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>LinksLetter</title>
 
+<!-- Theme is applied in <head> (not at the end of <body>) so the page
+     never flashes the wrong theme before the script runs. -->
+<script>
+(function () {
+    var saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", saved || "light");
+})();
+</script>
+
 <style>
 /* =========================================================
-   CUSTOM CSS — no framework. Replaces the inlined Pico CSS
-   that was here before: same look, same light/dark toggle
-   behavior, just hand-rolled instead of built on Pico's
-   token system. Kept on this template's OWN class names
-   (.navbar, .nav-link, .hero-topics, .news-grid, .news-column,
-   .category-section, .topic, .outlet, .links, .dot-div) since
-   build.py generates HTML using those exact names — renaming
-   them here would silently break the fragments it inserts.
+   Minimal, newspaper-style design (in the spirit of Drudge):
+   one column of plain headlines per category, serif type,
+   thin rules, a single accent color.
+
+   Class names are UNCHANGED from the previous template because
+   build.py emits them: .navbar, .nav-link, .hero-topics,
+   .news-grid, .news-column, .category-section, .topic-group,
+   .topic, .topic-context, .links, .outlet, .dot-div.
+
+   Header + description are merged purely in CSS: inside
+   .topic-group, .topic becomes a small inline tag and
+   .topic-context flows on the same line right after it.
+   If a category has no context paragraph, the tag simply
+   stands alone — no build.py change required.
    ========================================================= */
 
 :root{
-  --font-display:'Haettenschweiler','Arial Narrow Bold',sans-serif;
-  --font-hero:Calibri,sans-serif;
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
 
-  /* Theme tokens. toggleTheme() below always sets data-theme to
-     "light" or "dark" explicitly (on first load too), so these two
-     blocks are the only states that matter — no prefers-color-scheme
-     fallback needed. */
-  --bg:#c2c7d0;
-  --text:#0d3138;
-  --muted-border:#e3e6ec;
-  --border-width:1px;
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#6b6b6b;
+  --rule:#d9d9d9;
+  --rule-strong:#111111;
+  --accent:#a50000;
+  --link-visited:#555555;
+
+  --page-max:1200px;
 }
 
 [data-theme="dark"]{
-  --bg:#0d3138;
-  --text:#c2c7d0;
-  --muted-border:#232936;
+  --bg:#121212;
+  --text:#e8e6e3;
+  --muted:#9a9a9a;
+  --rule:#2e2e2e;
+  --rule-strong:#e8e6e3;
+  --accent:#ff6b5e;
+  --link-visited:#b5b5b5;
 }
 
 *{box-sizing:border-box;}
@@ -48,205 +69,230 @@ body{
   padding-bottom:env(safe-area-inset-bottom,0px);
   background:var(--bg);
   color:var(--text);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  line-height:1.5;
-  /* Base/fallback text size — covers anything (like the footer) that
-     doesn't set its own font-size. 1.3rem = 130% of the 1rem default,
-     matching the 130% bump applied to every other sized element below. */
-  font-size:1.3rem;
+  font-family:var(--font-serif);
+  font-size:17px;
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
-/* Plain global link rule. No framework trick needed here (that was
-   only ever necessary to out-specificity Pico's own zero-specificity
-   :where() link rule) — this is just the page's one link color. */
-a, a:visited{
-  color:var(--text);
-  text-decoration:none;
-}
-a:hover{text-decoration:underline;}
+a{color:var(--text);text-decoration:none;}
+a:visited{color:var(--link-visited);}
+a:hover{text-decoration:underline;text-underline-offset:2px;}
+a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
 button{font:inherit;background:none;border:none;padding:0;margin:0;color:inherit;cursor:pointer;}
 
-h1{font-weight:400;margin:0;}
-p{margin:0;}
+h1,h2,h3,p{margin:0;}
 ul{margin:0;padding:0;}
 
-/* NAVBAR */
+/* Shared centered page width */
+.navbar, .hero, .news-grid, footer{
+  max-width:var(--page-max);
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* NAVBAR — slim utility bar */
 .navbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:1rem 2rem;
-  border-bottom:var(--border-width) solid var(--text);
+  padding:.6rem 1.5rem;
+  border-bottom:1px solid var(--rule);
   background:var(--bg);
   position:sticky;
   top:env(safe-area-inset-top,0px);
   z-index:1000;
-  font-family:var(--font-display);
-  font-size:0.975rem; /* 0.75rem × 1.3 */
+  font-family:var(--font-sans);
+  font-size:.72rem;
+  font-weight:700;
   text-transform:uppercase;
-  letter-spacing:.25rem;
+  letter-spacing:.14em;
 }
 
-.nav-actions{
-  display:flex;
-  gap:1rem;
-}
+.nav-actions{display:flex;align-items:center;gap:1.25rem;}
 
 .nav-link{
-  font-size:0.975rem; /* 0.75rem × 1.3 */
+  color:var(--text);
+  font-size:.72rem;
   text-transform:uppercase;
-  letter-spacing:.25rem;
+  letter-spacing:.14em;
 }
-.nav-link:hover{text-decoration:underline;}
+.nav-link:visited{color:var(--text);}
+.theme-toggle{font-size:.95rem;line-height:1;letter-spacing:0;}
 
-/* HERO — reverse contrast: background and text are swapped relative
-   to the rest of the page (dark-on-light page gets a dark hero card
-   with light text, and vice versa in dark mode), so it reads as a
-   distinct banner in both themes without needing separate dark-mode
-   overrides of its own. */
+/* HERO — the masthead + lead headline, Drudge-style: big, centered, bold */
 .hero{
-  background:var(--text);
-  color:var(--bg);
   text-align:center;
-  font-family:var(--font-hero);
-  margin:1rem 0 1.25rem; /* full-bleed: no max-width, no auto side margins */
-  padding:1.5rem 2rem 1.75rem;
-  border-radius:0;
+  padding:2rem 1.5rem 1.25rem;
+  border-bottom:3px double var(--rule-strong);
 }
 
-.hero h1{font-weight:400;font-size:2.1rem;line-height:1.25;margin-bottom:0;}
-.hero h1 a{color:inherit;}
+.hero h1{
+  font-family:var(--font-serif);
+  font-weight:700;
+  font-size:clamp(1.9rem, 4.5vw, 3rem);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  max-width:22ch;
+  margin:0 auto;
+}
+.hero h1 a, .hero h1 a:visited{color:inherit;}
 
+/* Secondary lead stories under the main headline */
 .hero-topics{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:2rem;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:.75rem 2rem;
   margin-top:1.25rem;
-  font-family:var(--font-display);
-  font-size:1.105rem; /* 0.85rem × 1.3 */
-  font-weight:200;
+  padding-top:1rem;
+  border-top:1px solid var(--rule);
+  font-family:var(--font-serif);
+  font-size:1rem;
+  font-weight:400;
+  line-height:1.3;
 }
-.hero-topics a{color:inherit;}
+.hero-topics a, .hero-topics a:visited{color:var(--text);}
 
-/* NEWS GRID */
+/* NEWS GRID — three columns divided by hairline rules */
 .news-grid{
   display:grid;
   grid-template-columns:repeat(3, minmax(0, 1fr));
-  gap:2rem;
-  padding:.5rem 2rem 2rem;
+  gap:0;
+  padding:1.5rem 0 1rem;
   align-items:start;
 }
 
 .news-column{
   display:flex;
   flex-direction:column;
+  padding:0 1.5rem;
+  min-width:0;
 }
+.news-column + .news-column{border-left:1px solid var(--rule);}
 
 .category-section{
-  padding-bottom:1rem;
-  margin-bottom:1rem;
-  border-bottom:var(--border-width) solid var(--muted-border);
+  padding-bottom:1.1rem;
+  margin-bottom:1.1rem;
+  border-bottom:1px solid var(--rule);
 }
 .category-section:last-child{border-bottom:none;margin-bottom:0;}
 
-.topic{
-  font-family:var(--font-display);
-  font-size:1.365rem; /* 1.05rem × 1.3 */
-  text-transform:uppercase;
-  letter-spacing:.75rem;
-  text-align:left;
-  margin-bottom:.35rem;
+/* ---- Merged header + description line ---- */
+.topic-group{
+  margin-bottom:.6rem;
+  line-height:1.4;
 }
 
-/* build.py wraps every heading in .topic-group, with an optional
-   .topic-context paragraph after it when that category has one set in
-   data/site_categories.csv. The group's own margin-bottom is what
-   creates the gap before the links list — when there's no context
-   paragraph, .topic's smaller margin-bottom collapses into the
-   group's, so spacing stays consistent either way rather than needing
-   two different values depending on whether a category has a blurb. */
-.topic-group{margin-bottom:.75rem;}
+/* The section name becomes a small tag at the start of the line */
+.topic{
+  display:inline;
+  font-family:var(--font-sans);
+  font-size:.66rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--accent);
+  margin:0 .45em 0 0;
+  white-space:nowrap;
+  vertical-align:.08em;
+}
 
+/* The description continues on the same line, right after the tag */
 .topic-context{
+  display:inline;
   margin:0;
-  font-family:var(--font-display);
-  font-size:1.235rem; /* .95rem × 1.3 */
-  font-weight:400;
+  font-family:var(--font-serif);
+  font-size:.95rem;
   font-style:italic;
+  font-weight:400;
+  color:var(--text);
   letter-spacing:normal;
   text-transform:none;
-  text-align:left;
-  line-height:1.4;
-  max-width:32rem;
 }
 
-.outlet{
-  font-weight:400;
-  opacity:0.5;
-  text-transform:uppercase;
-}
-
+/* Headlines */
 .links{
   list-style:none;
-  font-weight:200;
-  font-size:1.17rem; /* .9rem × 1.3 */
-  font-family:var(--font-display);
+  font-family:var(--font-serif);
+  font-size:1rem;
+  font-weight:400;
 }
-.links li{margin-bottom:.75rem;line-height:1.15;}
+.links li{
+  margin-bottom:.55rem;
+  line-height:1.3;
+}
+.links li:last-child{margin-bottom:0;}
 
-.dot-div{opacity:0.6;}
+.outlet{
+  font-family:var(--font-sans);
+  font-size:.62rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+  opacity:1;
+  white-space:nowrap;
+}
+
+.dot-div{color:var(--muted);opacity:.7;}
 
 /* FOOTER */
 footer{
   display:flex;
-  justify-content:space-between;
-  padding:2rem;
-  border-top:var(--border-width) solid var(--text);
-  margin-top:2rem;
-  font-family:var(--font-display);
-  letter-spacing:.25rem;
+  justify-content:center;
+  padding:1.5rem;
+  border-top:1px solid var(--rule);
+  margin-top:1rem;
+  font-family:var(--font-sans);
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--muted);
 }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
-    .hero-topics {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .news-grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 900px){
+  .news-grid{grid-template-columns:1fr;padding-top:1rem;}
+  .news-column{padding:0 1.25rem;}
+  .news-column + .news-column{
+    border-left:none;
+    border-top:1px solid var(--rule);
+    padding-top:1.1rem;
+    margin-top:1.1rem;
+  }
+  .hero-topics{grid-template-columns:1fr;gap:.6rem;}
+  .navbar{padding:.6rem 1.25rem;}
 }
 
+@media print{
+  .navbar .nav-actions{display:none;}
+  .navbar{position:static;}
+}
 </style>
 </head>
 
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar">
+<nav class="navbar">
     <div>LinksLetter</div>
 
     <div class="nav-actions">
-
+        <a class="nav-link" href="/about">About</a>
         <button
-            class="nav-link"
-            onclick="location.href='/about'">
-            About
-        </button>
-        <button
-            class="nav-link"
+            class="nav-link theme-toggle"
+            type="button"
+            aria-label="Toggle dark mode"
             onclick="toggleTheme()">
             ☾
         </button>
-
     </div>
-</div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
+<header class="hero">
     <h1><a href="https://therealnews.com/brazil-lula-historic-victory-against-trump-flavio-bolsonaro" target="_blank" rel="noopener noreferrer">Brazil’s Lula wins ‘historic victory’ against right-wing Trump ally Flávio Bolsonaro <span class="dot-div"> · </span><span class="outlet">Real News Network</span></a></h1>
 
     <div class="hero-topics">
@@ -254,10 +300,10 @@ footer{
 <div class='hero-card'><a href="https://jacobin.com/2026/10/lula-brazil-election-trump-interference" target="_blank" rel="noopener noreferrer">Lula’s Win Is a Defeat for Donald Trump and MAGA <span class="dot-div"> · </span><span class="outlet">Jacobin</span></a></div>
 <div class='hero-card'><a href="https://www.motherjones.com/politics/2026/10/luiz-inacio-lula-suprise-win-blocks-trumps-push-for-a-far-right-brazil/" target="_blank" rel="noopener noreferrer">Lula’s Suprise Win Blocks Trump’s Push for a Far-Right Brazil <span class="dot-div"> · </span><span class="outlet">Mother Jones</span></a></div>
     </div>
-</div>
+</header>
 
 <!-- MAIN CONTENT -->
-<div class="news-grid">
+<main class="news-grid">
     <div class='news-column'>
 <div class='category-section'><div class='topic-group'><div class='topic'>Midterm elections 2026</div></div><ul class='links'>
 <li><a href="https://levernews.com/schumer-jeffries-face-a-voter-revolt/" target="_blank" rel="noopener noreferrer">Schumer, Jeffries Face A Voter  Revolt <span class="dot-div"> · </span><span class="outlet">The Lever</span></a></li>
@@ -329,31 +375,20 @@ footer{
 <li><a href="https://www.motherjones.com/politics/2026/10/trump-epa-environmental-policy-rulemaking-public-input-comment-laws/" target="_blank" rel="noopener noreferrer">Trump Has Largely Deprived the US Public of a Voice on Environmental Policy <span class="dot-div"> · </span><span class="outlet">Mother Jones</span></a></li>
 </ul></div>
 </div>
-</div>
+</main>
 
 <!-- FOOTER -->
 <footer>
-    <div>© 2026</div>
+    <div>© 2026 LinksLetter</div>
 </footer>
 
-<!-- -----------------------
-     THEME SCRIPT
------------------------- -->
 <script>
 function toggleTheme() {
-    const current = document.documentElement.getAttribute("data-theme");
-    const next = current === "dark" ? "light" : "dark";
-
+    var current = document.documentElement.getAttribute("data-theme");
+    var next = current === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
 }
-
-// load saved theme or default
-const saved = localStorage.getItem("theme");
-document.documentElement.setAttribute(
-    "data-theme",
-    saved || "light"
-);
 </script>
 
 </body>
